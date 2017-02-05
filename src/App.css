@@ -64,3 +64,8 @@ li:hover .remove-item {
   padding: 0 3px;
   text-decoration: none;
 }
+
+.footer-links a.active{
+  font-weight: bold;
+  text-decoration: underline;
+}
