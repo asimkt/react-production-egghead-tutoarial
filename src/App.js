@@ -4,6 +4,8 @@ import './App.css';
 
 import {TodoForm, TodoList} from './components/todo';
 
+import {addTodo, generateId} from './components/lib/todoHelpers'
+
 class App extends Component {
   constructor() {
     super()
@@ -16,11 +18,29 @@ class App extends Component {
       currentTodo: ''
     }
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleInputChange (evt) {
+  handleInputChange(evt) {
     this.setState({
       currentTodo: evt.target.value
+    })
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault();
+    const newId = generateId()
+    const newTodo = {
+      id: newId,
+      name: this.state.currentTodo,
+      isComplete: false
+    }
+
+    const updatedTodos = addTodo(this.state.todos, newTodo)
+
+    this.setState({
+      todos: updatedTodos,
+      currentTodo: ''
     })
   }
 
@@ -34,7 +54,8 @@ class App extends Component {
         <div className="Todo-App">
           <TodoForm
             handleInputChange={this.handleInputChange}
-            currentTodo={this.state.currentTodo}/>
+            currentTodo={this.state.currentTodo}
+            handleSubmit={this.handleSubmit}/>
           <TodoList todos={this.state.todos}/>
         </div>
       </div>
