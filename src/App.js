@@ -6,7 +6,7 @@ import {TodoForm, TodoList, Footer} from './components/todo';
 
 import {addTodo, removeTodo, generateId, findById, toggleTodo, updateTodos, filterTodos} from './lib/todoHelpers'
 
-import {loadTodos} from './lib/todoService'
+import {loadTodos, createTodo} from './lib/todoService'
 
 class App extends Component {
 
@@ -62,6 +62,17 @@ class App extends Component {
       currentTodo: '',
       errorMessage: ''
     })
+
+    createTodo(newTodo).then(()=>{
+      this.showTempMessage('Todo added');
+    });
+  }
+
+  showTempMessage = (msg) => {
+    this.setState({
+      message: msg
+    })
+    setTimeout(() => this.setState({message: ''}), 2500);
   }
 
   handleErrorSubmit = (evt) => {
@@ -87,6 +98,7 @@ class App extends Component {
             currentTodo={this.state.currentTodo}
             handleSubmit={handleSubmit}/>
           {this.state.errorMessage && <p className="error"> {this.state.errorMessage} </p>}
+          {this.state.message && <p className="success"> {this.state.message} </p>}
           <TodoList handleRemove={this.handleRemove}
             handleToggle={this.handleToggle}
             todos={displayTodos}/>

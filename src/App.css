@@ -59,6 +59,10 @@ li:hover .remove-item {
   color: red;
 }
 
+.success {
+  color: green;
+}
+
 .footer-links a{
   color: #45f;
   padding: 0 3px;
