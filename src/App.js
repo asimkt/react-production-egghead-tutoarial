@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import {TodoForm, TodoList} from './components/todo';
+import {TodoForm, TodoList, Footer} from './components/todo';
 
 import {addTodo, removeTodo, generateId, findById, toggleTodo, updateTodos} from './lib/todoHelpers'
 
@@ -84,6 +84,7 @@ class App extends Component {
             handleToggle={this.handleToggle}
             todos={this.state.todos}/>
         </div>
+        <Footer />
       </div>
     );
   }

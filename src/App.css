@@ -58,3 +58,9 @@ li:hover .remove-item {
 .error {
   color: red;
 }
+
+.footer-links a{
+  color: #45f;
+  padding: 0 3px;
+  text-decoration: none;
+}
