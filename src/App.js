@@ -4,7 +4,7 @@ import './App.css';
 
 import {TodoForm, TodoList} from './components/todo';
 
-import {addTodo, generateId, findById, toggleTodo, updateTodos} from './lib/todoHelpers'
+import {addTodo, removeTodo, generateId, findById, toggleTodo, updateTodos} from './lib/todoHelpers'
 
 class App extends Component {
 
@@ -15,6 +15,14 @@ class App extends Component {
      { id: 3, name: 'Deploy!!', isComplete: false}
     ],
     currentTodo: ''
+  }
+
+  handleRemove = (id, evt) => {
+    evt.preventDefault();
+    const updatedTodos = removeTodo(this.state.todos, id);
+    this.setState({
+      todos: updatedTodos
+    })
   }
 
   handleToggle = (id) => {
@@ -72,7 +80,9 @@ class App extends Component {
             currentTodo={this.state.currentTodo}
             handleSubmit={handleSubmit}/>
           {this.state.errorMessage && <p className="error"> {this.state.errorMessage} </p>}
-          <TodoList handleToggle={this.handleToggle} todos={this.state.todos}/>
+          <TodoList handleRemove={this.handleRemove}
+            handleToggle={this.handleToggle}
+            todos={this.state.todos}/>
         </div>
       </div>
     );

@@ -41,6 +41,20 @@ li {
   list-style-type: none;
 }
 
+.remove-item {
+  visibility: hidden;
+  padding: 0 3px;
+}
+
+.remove-item a {
+  text-decoration: none;
+  color: red;
+}
+
+li:hover .remove-item {
+  visibility: visible;
+}
+
 .error {
   color: red;
 }
