@@ -6,6 +6,8 @@ import {TodoForm, TodoList, Footer} from './components/todo';
 
 import {addTodo, removeTodo, generateId, findById, toggleTodo, updateTodos, filterTodos} from './lib/todoHelpers'
 
+import {loadTodos} from './lib/todoService'
+
 class App extends Component {
 
   static contextTypes = {
@@ -13,11 +15,7 @@ class App extends Component {
   }
 
   state = {
-    todos: [
-     { id: 1, name: 'Learn JSX', isComplete: true},
-     { id: 2, name: 'Build App', isComplete: false},
-     { id: 3, name: 'Deploy!!', isComplete: false}
-    ],
+    todos: [],
     currentTodo: ''
   }
 
@@ -42,6 +40,10 @@ class App extends Component {
     this.setState({
       currentTodo: evt.target.value
     })
+  }
+
+  componentDidMount = () => {
+    loadTodos().then(todos => this.setState({todos}))
   }
 
   handleSubmit = (evt) => {

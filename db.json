@@ -1,0 +1,15 @@
+{
+  "todos": [{
+    "id": 1,
+    "name": "Learn JS",
+    "isComplete": true
+  }, {
+    "id": 2,
+    "name": "Build Ap",
+    "isComplete": false
+  }, {
+    "id": 3,
+    "name": "Deploy!!",
+    "isComplete": false
+  }]
+}
