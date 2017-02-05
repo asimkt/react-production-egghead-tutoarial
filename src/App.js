@@ -5,8 +5,9 @@ import './App.css';
 import {TodoForm, TodoList, Footer} from './components/todo';
 
 import {addTodo, removeTodo, generateId, findById, toggleTodo, updateTodos, filterTodos} from './lib/todoHelpers'
+import {partial, pipe} from './lib/utils'
 
-import {loadTodos, createTodo} from './lib/todoService'
+import {loadTodos, createTodo, saveTodo} from './lib/todoService'
 
 class App extends Component {
 
@@ -28,12 +29,15 @@ class App extends Component {
   }
 
   handleToggle = (id) => {
-    const todo = findById(id, this.state.todos)
-    const toggledTodo = toggleTodo(todo)
-    const updatedTodos = updateTodos(this.state.todos, toggledTodo)
+    const getToggledTodo = pipe(findById, toggleTodo);
+    const updated = getToggledTodo(id, this.state.todos);
+    const getUpdatedTodos = partial(updateTodos, this.state.todos);
+    const updatedTodos = getUpdatedTodos(updated);
     this.setState({
       todos: updatedTodos
     })
+    saveTodo(updated).then(
+      () => this.showTempMessage('Todo updated'))
   }
 
   handleInputChange = (evt) => {
@@ -72,7 +76,7 @@ class App extends Component {
     this.setState({
       message: msg
     })
-    setTimeout(() => this.setState({message: ''}), 2500);
+    setTimeout(() => this.setState({message: ''}), 1000);
   }
 
   handleErrorSubmit = (evt) => {
