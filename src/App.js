@@ -19,6 +19,7 @@ class App extends Component {
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleErrorSubmit = this.handleErrorSubmit.bind(this)
   }
 
   handleInputChange(evt) {
@@ -40,11 +41,21 @@ class App extends Component {
 
     this.setState({
       todos: updatedTodos,
-      currentTodo: ''
+      currentTodo: '',
+      errorMessage: ''
+    })
+  }
+
+  handleErrorSubmit(evt) {
+    evt.preventDefault();
+    this.setState({
+      errorMessage: 'Please suppply a todo'
     })
   }
 
   render() {
+    const handleSubmit = this.state.currentTodo ?
+      this.handleSubmit : this.handleErrorSubmit
     return (
       <div className="App">
         <div className="App-header">
@@ -55,7 +66,8 @@ class App extends Component {
           <TodoForm
             handleInputChange={this.handleInputChange}
             currentTodo={this.state.currentTodo}
-            handleSubmit={this.handleSubmit}/>
+            handleSubmit={handleSubmit}/>
+          {this.state.errorMessage && <p className="error"> {this.state.errorMessage} </p>}
           <TodoList todos={this.state.todos}/>
         </div>
       </div>
