@@ -7,3 +7,8 @@ export const TodoForm = (props) => (
 	          onChange={props.handleInputChange}/>
 	</form>
 )
+
+TodoForm.propTypes = {
+	currentTodo: React.PropTypes.string.isRequired,
+	handleInputChange: React.PropTypes.func.isRequired
+}
