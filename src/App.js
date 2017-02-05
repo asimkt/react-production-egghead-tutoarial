@@ -4,9 +4,13 @@ import './App.css';
 
 import {TodoForm, TodoList, Footer} from './components/todo';
 
-import {addTodo, removeTodo, generateId, findById, toggleTodo, updateTodos} from './lib/todoHelpers'
+import {addTodo, removeTodo, generateId, findById, toggleTodo, updateTodos, filterTodos} from './lib/todoHelpers'
 
 class App extends Component {
+
+  static contextTypes = {
+    route: React.PropTypes.string
+  }
 
   state = {
     todos: [
@@ -68,6 +72,7 @@ class App extends Component {
   render() {
     const handleSubmit = this.state.currentTodo ?
       this.handleSubmit : this.handleErrorSubmit
+    const displayTodos = filterTodos(this.state.todos, this.context.route)
     return (
       <div className="App">
         <div className="App-header">
@@ -82,7 +87,7 @@ class App extends Component {
           {this.state.errorMessage && <p className="error"> {this.state.errorMessage} </p>}
           <TodoList handleRemove={this.handleRemove}
             handleToggle={this.handleToggle}
-            todos={this.state.todos}/>
+            todos={displayTodos}/>
         </div>
         <Footer />
       </div>

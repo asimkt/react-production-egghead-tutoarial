@@ -1,4 +1,4 @@
-import {addTodo, findById, toggleTodo, updateTodos, removeTodo} from './todoHelpers'
+import {addTodo, findById, toggleTodo, updateTodos, removeTodo, filterTodos} from './todoHelpers'
 
 test('addTodo should add the passed todo the list', () => {
 	const startTodos = [
@@ -161,4 +161,53 @@ test('updateTodos should not mutate original array', () => {
 
 	// expect
 	expect(result).not.toBe(todos);
+});
+
+test('filterTodos return all items for \'/\'', () => {
+	// Arrange
+	const todos = [
+		{ id: 1, name: 'Learn JSX', isComplete: false},
+		{ id: 2, name: 'Build App', isComplete: false},
+		{ id: 3, name: 'Deploy!!', isComplete: true}
+	]
+	// Act
+	const result = filterTodos(todos, '/');
+
+	// expect
+	expect(result).toEqual(todos);
+});
+
+test('filterTodos return complete items for \'/complete\'', () => {
+	// Arrange
+	const todos = [
+		{ id: 1, name: 'Learn JSX', isComplete: false},
+		{ id: 2, name: 'Build App', isComplete: false},
+		{ id: 3, name: 'Deploy!!', isComplete: true}
+	]
+	const expected = [
+		{ id: 3, name: 'Deploy!!', isComplete: true}
+	]
+	// Act
+	const result = filterTodos(todos, '/complete');
+
+	// expect
+	expect(result).toEqual(expected);
+});
+
+test('filterTodos return incomplete items for \'/active\'', () => {
+	// Arrange
+	const todos = [
+		{ id: 1, name: 'Learn JSX', isComplete: false},
+		{ id: 2, name: 'Build App', isComplete: false},
+		{ id: 3, name: 'Deploy!!', isComplete: true}
+	]
+	const expected = [
+		{ id: 1, name: 'Learn JSX', isComplete: false},
+		{ id: 2, name: 'Build App', isComplete: false}
+	]
+	// Act
+	const result = filterTodos(todos, '/active');
+
+	// expect
+	expect(result).toEqual(expected);
 });
